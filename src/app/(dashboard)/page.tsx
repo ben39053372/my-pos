@@ -11,7 +11,7 @@ import Button from "@/components/ui/Button";
 import ProductCard from "@/components/ProductCard";
 import CartItem from "@/components/CartItem";
 
-export default function HomePage() {
+export default function DashboardPage() {
   const { products, categories } = useProductStore();
   const {
     items,
