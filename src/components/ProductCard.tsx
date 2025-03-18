@@ -1,6 +1,8 @@
 import { Product } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import Button from "./ui/Button";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardFooter } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/badge";
 
 interface ProductCardProps {
   product: Product;
@@ -16,32 +18,39 @@ export default function ProductCard({
   };
 
   return (
-    <div className="border rounded-lg p-4 flex flex-col">
-      <div className="h-24 bg-gray-200 rounded-md mb-2 flex items-center justify-center text-gray-500">
+    <Card className="overflow-hidden">
+      <div className="h-32 bg-muted flex items-center justify-center">
         {product.image ? (
           <img
             src={product.image}
             alt={product.name}
-            className="h-full w-full object-cover rounded-md"
+            className="h-full w-full object-cover"
           />
         ) : (
-          <span>No image</span>
+          <span className="text-muted-foreground">No image</span>
         )}
       </div>
-      <h3 className="font-medium">{product.name}</h3>
-      <p className="text-gray-600 text-sm mb-1">
-        {formatCurrency(product.price)}
-      </p>
-      <p className="text-gray-500 text-xs mb-2">Stock: {product.stock}</p>
-      <Button
-        onClick={handleAddToCart}
-        disabled={product.stock <= 0}
-        variant={product.stock <= 0 ? "secondary" : "primary"}
-        size="sm"
-        className="mt-auto"
-      >
-        {product.stock <= 0 ? "Out of Stock" : "Add to Cart"}
-      </Button>
-    </div>
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="font-medium text-lg">{product.name}</h3>
+          <Badge variant="outline">{product.category}</Badge>
+        </div>
+        <p className="text-foreground font-medium mb-1">
+          {formatCurrency(product.price)}
+        </p>
+        <p className="text-muted-foreground text-sm">Stock: {product.stock}</p>
+      </CardContent>
+      <CardFooter className="p-4 pt-0">
+        <Button
+          onClick={handleAddToCart}
+          disabled={product.stock <= 0}
+          variant={product.stock <= 0 ? "secondary" : "default"}
+          size="sm"
+          className="w-full"
+        >
+          {product.stock <= 0 ? "Out of Stock" : "Add to Cart"}
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

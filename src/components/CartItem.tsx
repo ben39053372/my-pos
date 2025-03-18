@@ -1,5 +1,8 @@
 import { CartItem as CartItemType } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/badge";
+import { MinusIcon, PlusIcon, XIcon } from "lucide-react";
 
 interface CartItemProps {
   item: CartItemType;
@@ -15,36 +18,51 @@ export default function CartItem({
   const { product, quantity } = item;
 
   return (
-    <div className="flex justify-between items-center py-2 border-b">
+    <div className="flex justify-between items-center py-3 border-b">
       <div>
         <h3 className="font-medium">{product.name}</h3>
-        <p className="text-gray-600 text-sm">
-          {formatCurrency(product.price)} each
-        </p>
+        <div className="flex items-center gap-2 mt-1">
+          <p className="text-muted-foreground text-sm">
+            {formatCurrency(product.price)} each
+          </p>
+          <Badge variant="outline" className="text-xs">
+            {product.category}
+          </Badge>
+        </div>
       </div>
-      <div className="flex items-center">
-        <button
-          onClick={() => onUpdateQuantity(product.id, quantity - 1)}
-          className="px-2 py-1 bg-gray-200 rounded-l-md"
-          aria-label="Decrease quantity"
-        >
-          -
-        </button>
-        <span className="px-3 py-1 bg-gray-100">{quantity}</span>
-        <button
-          onClick={() => onUpdateQuantity(product.id, quantity + 1)}
-          className="px-2 py-1 bg-gray-200 rounded-r-md"
-          aria-label="Increase quantity"
-        >
-          +
-        </button>
-        <button
+      <div className="flex items-center gap-1">
+        <div className="flex items-center border rounded-md overflow-hidden">
+          <Button
+            onClick={() => onUpdateQuantity(product.id, quantity - 1)}
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-none"
+            disabled={quantity <= 1}
+            aria-label="Decrease quantity"
+          >
+            <MinusIcon className="h-3 w-3" />
+          </Button>
+          <span className="px-3 py-1 text-sm">{quantity}</span>
+          <Button
+            onClick={() => onUpdateQuantity(product.id, quantity + 1)}
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-none"
+            disabled={quantity >= product.stock}
+            aria-label="Increase quantity"
+          >
+            <PlusIcon className="h-3 w-3" />
+          </Button>
+        </div>
+        <Button
           onClick={() => onRemove(product.id)}
-          className="ml-2 px-2 py-1 text-red-600 hover:text-red-800"
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
           aria-label="Remove item"
         >
-          ×
-        </button>
+          <XIcon className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
