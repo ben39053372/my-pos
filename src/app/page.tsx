@@ -6,8 +6,8 @@ import useCartStore from "@/store/useCartStore";
 import useProductStore from "@/store/useProductStore";
 import { formatCurrency } from "@/lib/utils";
 import { Product } from "@/lib/types";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import ProductCard from "@/components/ProductCard";
 import CartItem from "@/components/CartItem";
 
@@ -71,7 +71,7 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-2">
               <Button
                 onClick={() => setSelectedCategory("all")}
-                variant={selectedCategory === "all" ? "primary" : "secondary"}
+                variant={selectedCategory === "all" ? "default" : "secondary"}
                 size="sm"
               >
                 All
@@ -81,7 +81,7 @@ export default function HomePage() {
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   variant={
-                    selectedCategory === category ? "primary" : "secondary"
+                    selectedCategory === category ? "default" : "secondary"
                   }
                   size="sm"
                 >
